@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALCULATOR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; 
+            height: 100vh;
+            background-color: #f3f4f6;
+        }
+
+        .header-container {
+            width: 100%;
+            text-align: center;
+            background-color: #333;
+            padding: 20px;
+            margin-bottom: 20px; 
+        }
+
+        header h1 {
+            color: white;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .calculator {
+            width: 90%;  /* Make it responsive */
+            max-width: 400px; /* Set a maximum width */
+            background-color: black;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #display {
+            width: 100%;
+            height: 50px;
+            font-size: 24px;
+            text-align: right;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #141313;
+            border-radius: 5px;
+            background-color: white;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+
+        button {
+            height: 60px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: rgb(70, 150, 70);
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        button.operator {
+            background-color: #048b31;
+            color: white;
+        }
+
+        button.operator:hover {
+            background-color: #b4c9cf;
+        }
+
+        button.zero {
+            grid-column: span 2;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 28px; /* Smaller header on small screens */
+            }
+
+            .calculator {
+                width: 95%;
+                max-width: 350px; /* Smaller max-width */
+            }
+
+            #display {
+                font-size: 20px; /* Smaller font for display */
+                padding: 15px; /* Reduced padding */
+            }
+
+            button {
+                font-size: 1.2rem; /* Smaller buttons */
+                height: 50px; /* Adjust button size */
+            }
+
+            button.zero {
+                grid-column: span 2; 
+            }
+        }
+
+        /* For extra-small screens */
+        @media (max-width: 400px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            .calculator {
+                width: 95%;
+                max-width: 300px; /* Further reduce max-width */
+            }
+
+            button {
+                font-size: 1rem; /* Even smaller buttons */
+                height: 45px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header Container -->
+    <div class="header-container">
+        <header>
+            <h1>CALCULATOR</h1>
+        </header>
+    </div>
+
+    <!-- Calculator Container -->
+    <div class="calculator">
+        <input type="text" id="display" disabled />
+        <div class="buttons">
+            <button onclick="clearDisplay()" class="operator">C</button>
+            <button onclick="deleteLast()" class="operator">DEL</button>
+            <button onclick="appendCharacter('%')" class="operator">%</button>
+            <button onclick="appendCharacter('/')" class="operator">/</button>
+            <button onclick="appendCharacter('7')">7</button>
+            <button onclick="appendCharacter('8')">8</button>
+            <button onclick="appendCharacter('9')">9</button>
+            <button onclick="appendCharacter('*')" class="operator">*</button>
+            <button onclick="appendCharacter('4')">4</button>
+            <button onclick="appendCharacter('5')">5</button>
+            <button onclick="appendCharacter('6')">6</button>
+            <button onclick="appendCharacter('-')" class="operator">-</button>
+            <button onclick="appendCharacter('1')">1</button>
+            <button onclick="appendCharacter('2')">2</button>
+            <button onclick="appendCharacter('3')">3</button>
+            <button onclick="appendCharacter('+')" class="operator">+</button>
+            <button onclick="appendCharacter('0')" class="zero">0</button>
+            <button onclick="appendCharacter('.')">.</button>
+            <button onclick="calculate()" class="operator">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendCharacter(character) {
+            display.value += character;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                display.value = eval(display.value);
+            } catch (e) {
+                alert('Invalid calculation');
+                clearDisplay();
+            }
+        }
+
+        function calculate() {
+            try {
+                if (display.value.includes('/0')) {
+                    throw new Error('Division by zero');
+                }
+                display.value = eval(display.value);
+            } catch (e) {
+                display.value = 'Error';
+                setTimeout(clearDisplay, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
